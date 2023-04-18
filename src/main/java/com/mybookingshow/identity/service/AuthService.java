@@ -5,7 +5,7 @@ import com.mybookingshow.identity.repository.UserCredentialRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,13 +16,23 @@ public class AuthService {
     private final UserCredentialRepository userCredentialRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtService jwtService;
 
     public String saveUser(UserCredential userCredential) {
         passwordEncoder.encode(userCredential.getPassword());
         userCredentialRepository.save(userCredential);
         log.info("Added user successfully");
         return "Added User Successfully";
+    }
+
+    public String generateToken(String userName){
+        return jwtService.generateToken(userName);
+    }
+
+    public void validateToken(String token){
+        jwtService.validateToken(token);
     }
 
 }
