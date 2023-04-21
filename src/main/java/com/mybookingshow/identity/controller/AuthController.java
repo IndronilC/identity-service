@@ -2,8 +2,8 @@ package com.mybookingshow.identity.controller;
 
 import com.mybookingshow.identity.entity.UserCredential;
 import com.mybookingshow.identity.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
     @Autowired
     private AuthService authService;
     @PostMapping("/register")
-    public void createUser(@RequestBody UserCredential userCredential){
+    public String createUser(@RequestBody UserCredential userCredential){
         authService.saveUser(userCredential);
-
+        log.info("User has been successfully added to the system");
+        return "User has been successfully added to the system";
     }
 
-    @GetMapping("/token")
-    public void getToken(@RequestBody UserCredential userCredential){
-        authService.generateToken(userCredential.getFirstName());
+    @PostMapping("/token")
+    public String getToken(@RequestBody UserCredential userCredential){
+        return authService.generateToken(userCredential.getFirstName());
     }
 
     @PostMapping("/validate")

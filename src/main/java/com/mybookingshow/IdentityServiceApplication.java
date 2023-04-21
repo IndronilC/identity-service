@@ -1,9 +1,11 @@
 package com.mybookingshow;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@Slf4j
 public class IdentityServiceApplication {
 
 	public static void main(String[] args) {
@@ -12,6 +14,7 @@ public class IdentityServiceApplication {
 		System.setProperty("mysql.service.password", "admin");
 		System.setProperty("mysql.service.dialect", "org.hibernate.dialect.MySQL5Dialect");*/
 		SpringApplication.run(IdentityServiceApplication.class, args);
+		log.info("Identity Service has successfully started");
 
 	}
 
